@@ -1,0 +1,5 @@
+functionStatic
+missingIncludeSystem
+unmatchedSuppression
+unusedFunction
+*:deps/*
