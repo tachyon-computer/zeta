@@ -6,9 +6,11 @@ set(CLANG_WARNINGS -Wall
                    -Wextra
                    -Wpedantic
                    -Wshadow
+                   -Wnon-virtual-dtor
                    -Wold-style-cast
                    -Wcast-align
                    -Wunused
+                   -Woverloaded-virtual
                    -Wsign-conversion
                    -Wnull-dereference
                    -Wdouble-promotion
@@ -30,7 +32,7 @@ set(GCC_WARNINGS ${CLANG_WARNINGS}
 
 if(MSVC)
     set(PROJECT_WARNINGS -w)
-elseif(CMAKE_C_COMPILER_ID STREQUAL "Clang")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     set(PROJECT_WARNINGS ${CLANG_WARNINGS})
 else()
     set(PROJECT_WARNINGS ${GCC_WARNINGS})

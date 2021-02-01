@@ -29,7 +29,7 @@ if(OPTIONS_ENABLE_CCACHE)
     find_program(CCACHE ccache)
     if(CCACHE)
         log_option_enabled("ccache")
-        set(CMAKE_C_COMPILER_LAUNCHER ${CCACHE})
+        set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
     else()
         log_option_disabled("ccache")
     endif()
@@ -50,5 +50,9 @@ if(OPTIONS_ENABLE_LTO)
 endif()
 
 # === PCH ===
-target_precompile_headers(common_project_options INTERFACE <stdint.h>
+target_precompile_headers(common_project_options INTERFACE <memory>
+                                                           <string>
+                                                           <string_view>
                          )
+
+target_compile_options(common_project_options INTERFACE -std=c++2a)
