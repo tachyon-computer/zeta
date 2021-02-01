@@ -7,7 +7,7 @@ if(TOOLS_ENABLE_TAGS)
     if(CTAGS)
         log_option_enabled("tags")
         add_custom_target(tags_generation ALL
-                          COMMAND ${CTAGS} -R --fields=+iaS --extras=+q --language-force=C .
+                          COMMAND ${CTAGS} -R --fields=+iaS --extras=+q --language-force=C++ .
                           COMMENT "Generating tags file..."
                          )
     else()
