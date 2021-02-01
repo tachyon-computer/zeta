@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
-project(zetac VERSION 0.0.1 LANGUAGES C)
+project(zetac VERSION 0.0.1 LANGUAGES CXX)
 
-file(GLOB_RECURSE sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
-file(GLOB_RECURSE includes ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
+file(GLOB_RECURSE sources ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc)
+file(GLOB_RECURSE includes ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hh)
 
 add_executable(zetac)
 target_sources(zetac
