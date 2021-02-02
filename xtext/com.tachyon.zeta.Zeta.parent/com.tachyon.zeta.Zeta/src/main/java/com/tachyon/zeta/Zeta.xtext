@@ -1,0 +1,9 @@
+grammar com.tachyon.zeta.Zeta with org.eclipse.xtext.common.Terminals
+
+generate zeta "http://www.tachyon.com/zeta/Zeta"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';

@@ -1,0 +1,8 @@
+.launch/
+.settings/
+**/generated/
+**/xtend-gen
+**/xtext-gen
+
+.classpath
+.project
