@@ -32,7 +32,9 @@ class DeclarationTests {
     def void testNoArgumentFunctionDeclaration() {
         val result = parseHelper.parse('''
             func noArgFunc() -> int
-            { }
+            {
+                return 0;
+            }
         ''')
 
         Assertions.assertNotNull(result)
@@ -44,7 +46,9 @@ class DeclarationTests {
     def void testOneArgumentFunctionDeclaration() {
         val result = parseHelper.parse('''
             func oneArgFunc(arg1: int) -> int
-            { }
+            {
+                return 0;
+            }
         ''')
 
         Assertions.assertNotNull(result)
@@ -56,7 +60,9 @@ class DeclarationTests {
     def void testThreeArgumentFunctionDeclaration() {
         val result = parseHelper.parse('''
             func oneArgFunc(arg1: int, arg2: float, arg3: int) -> int
-            { }
+            {
+                return 0;
+            }
         ''')
 
         Assertions.assertNotNull(result)

@@ -1,5 +1,6 @@
 grammar com.tachyon.zeta.Zeta with org.eclipse.xtext.common.Terminals
 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate zeta "http://www.tachyon.com/zeta/Zeta"
 
 Model:
@@ -18,7 +19,7 @@ ImportDeclaration:
 
 FunctionDeclaration:
     'func' functionName=ID '(' arguments=FunctionArguments ')' '->' type=Typespec
-    '{' '}'
+    '{' statements=Statements '}'
 ;
 
 FunctionArguments:
@@ -29,6 +30,36 @@ FunctionArgument:
     argumentName=ID ':' type=Typespec
 ;
 
+Statements:
+    (statements+=Statement)*
+;
+
+Statement:
+    returnStatement=ReturnStatement
+;
+
+ReturnStatement:
+    'return' returnExpression=Expression ';'
+;
+
+Expression:
+    intExpression=IntExpression |
+    floatExpression=FloatExpression
+;
+
+IntExpression:
+    value=INT
+;
+
+FloatExpression:
+    value=REAL
+;
+
 Typespec:
     name=ID
 ;
+
+terminal REAL returns ecore::EFloat:
+       ('+' | '-')? ('0'..'9')+ '.' ('0'..'9')+ (('e' | 'E') ('+' | '-')? ('0'..'9')+)?
+;
+
