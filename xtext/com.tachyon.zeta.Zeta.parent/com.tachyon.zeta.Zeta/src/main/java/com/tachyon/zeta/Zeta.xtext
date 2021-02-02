@@ -3,7 +3,14 @@ grammar com.tachyon.zeta.Zeta with org.eclipse.xtext.common.Terminals
 generate zeta "http://www.tachyon.com/zeta/Zeta"
 
 Model:
-	greetings+=Greeting*;
-	
-Greeting:
-	'Hello' name=ID '!';
+    declarations+=Declaration*
+;
+
+Declaration:
+    importDeclaration=ImportDeclaration
+;
+
+ImportDeclaration:
+    'use' (importPath=ID '(*)' |
+           importPath=ID '(' importNames+=ID (',' importNames+=ID)* ')')
+;
