@@ -16,12 +16,49 @@ class DeclarationTests {
     ParseHelper<Model> parseHelper
 
     @Test
-    def void testImport() {
+    def void testImportDeclaration() {
         val result = parseHelper.parse('''
             use libc(*)
             use libc(printf)
             use libc(printf, scanf)
         ''')
+
+        Assertions.assertNotNull(result)
+        val errors = result.eResource.errors
+        Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+    }
+
+    @Test
+    def void testNoArgumentFunctionDeclaration() {
+        val result = parseHelper.parse('''
+            func noArgFunc() -> int
+            { }
+        ''')
+
+        Assertions.assertNotNull(result)
+        val errors = result.eResource.errors
+        Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+    }
+
+    @Test
+    def void testOneArgumentFunctionDeclaration() {
+        val result = parseHelper.parse('''
+            func oneArgFunc(arg1: int) -> int
+            { }
+        ''')
+
+        Assertions.assertNotNull(result)
+        val errors = result.eResource.errors
+        Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+    }
+
+    @Test
+    def void testThreeArgumentFunctionDeclaration() {
+        val result = parseHelper.parse('''
+            func oneArgFunc(arg1: int, arg2: float, arg3: int) -> int
+            { }
+        ''')
+
         Assertions.assertNotNull(result)
         val errors = result.eResource.errors
         Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')

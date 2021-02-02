@@ -7,10 +7,28 @@ Model:
 ;
 
 Declaration:
-    importDeclaration=ImportDeclaration
+    importDeclaration=ImportDeclaration |
+    functionDeclaration=FunctionDeclaration
 ;
 
 ImportDeclaration:
     'use' (importPath=ID '(*)' |
            importPath=ID '(' importNames+=ID (',' importNames+=ID)* ')')
+;
+
+FunctionDeclaration:
+    'func' functionName=ID '(' arguments=FunctionArguments ')' '->' type=Typespec
+    '{' '}'
+;
+
+FunctionArguments:
+    (arguments+=FunctionArgument (',' arguments+=FunctionArgument)*)?
+;
+
+FunctionArgument:
+    argumentName=ID ':' type=Typespec
+;
+
+Typespec:
+    name=ID
 ;
