@@ -9,7 +9,8 @@ Model:
 
 Declaration:
     importDeclaration=ImportDeclaration |
-    functionDeclaration=FunctionDeclaration
+    functionDeclaration=FunctionDeclaration |
+    variableDeclaration=VariableDeclaration
 ;
 
 ImportDeclaration:
@@ -28,6 +29,10 @@ FunctionArguments:
 
 FunctionArgument:
     argumentName=ID ':' type=Typespec
+;
+
+VariableDeclaration:
+    'let' name=ID ':' type=Typespec '=' value=Expression ';'
 ;
 
 Statements:
