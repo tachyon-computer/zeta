@@ -80,4 +80,15 @@ class DeclarationTests {
         val errors = result.eResource.errors
         Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
     }
+
+    @Test
+    def void testConstVariableDeclaration() {
+        val result = parseHelper.parse('''
+            const foo: int = 42;
+        ''')
+
+        Assertions.assertNotNull(result)
+        val errors = result.eResource.errors
+        Assertions.assertTrue(errors.isEmpty, '''Unexpected errors: «errors.join(", ")»''')
+    }
 }

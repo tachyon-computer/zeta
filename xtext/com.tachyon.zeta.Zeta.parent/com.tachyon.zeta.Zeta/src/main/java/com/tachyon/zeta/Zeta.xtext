@@ -32,7 +32,7 @@ FunctionArgument:
 ;
 
 VariableDeclaration:
-    'let' name=ID ':' type=Typespec '=' value=Expression ';'
+    ((const='const') | 'let') name=ID ':' type=Typespec '=' value=Expression ';'
 ;
 
 Statements:
