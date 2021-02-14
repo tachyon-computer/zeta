@@ -17,3 +17,5 @@ compile_commands.json
 PVS-Studio/
 *pvs.out
 tags
+*.out
+
