@@ -1,0 +1,69 @@
+name: Build and run tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches-ignore:
+      - gh-pages
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: "Install dependencies"
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            clang-tidy-12 \
+            lcov \
+            ninja-build \
+           --install-suggests
+          sudo update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-12 30
+          sudo update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-12 30
+
+      - name: "Add scripts to path"
+        working-directory: ${{ github.workspace }}
+        run: echo "$GITHUB_WORKSPACE/sh" >> $GITHUB_PATH
+
+      - name: "Configure build"
+        working-directory: ${{ github.workspace }}
+        run: |
+          cmake -S . -B build -G Ninja \
+            -D CMAKE_CXX_COMPILER=clang++-12 \
+            -D CMAKE_BUILD_TYPE=Debug \
+            -D TACHYON_OPTIONS_BUILD_TESTING=ON \
+            -D TACHYON_OPTIONS_ENABLE_COVERAGE=ON \
+            -D TACHYON_TOOLS_ENABLE_TIDY=ON \
+            -D TACHYON_TOOLS_ENABLE_FORMATTING=OFF \
+            -D TACHYON_TOOLS_ENABLE_TAGS=OFF
+
+      - name: "Build"
+        working-directory: ${{ github.workspace }}/build
+        run: cmake --build .
+
+      - name: "Run tests"
+        working-directory: ${{ github.workspace }}/build
+        run: ctest
+
+      - name: "Check coverage"
+        working-directory: ${{ github.workspace }}/build
+        run: |
+          echo "$GITHUB_WORKSPACE"
+          lcov --directory . --gcov-tool llvm_gcov.sh --capture --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' "$GITHUB_WORKSPACE"'/extern/*' --output-file coverage.info
+          lcov --list coverage.info
+
+      - uses: codecov/codecov-action@v2
+        with:
+          files: ./build/coverage.info
+          fail_ci_if_error: true
