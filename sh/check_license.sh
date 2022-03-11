@@ -14,7 +14,7 @@ LICENSE_HEADER="^/\\*\\*
 license_errors=()
 
 # Take files changed in this commit
-for fname in $(git diff --name-only --cached)
+for fname in $(git diff --diff-filter=d --name-only --cached)
 do
     # Check only files with given extension
     if [[ ${fname##*\.} == @(cc|hh) ]]; then
